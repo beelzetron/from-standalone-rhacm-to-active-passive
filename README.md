@@ -119,12 +119,12 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
    kind: Restore
    metadata:
      name: import-hub2-clusters
-       namespace: open-custer-management-backup
-       spec:
-         cleanupBeforeRestore: None # IMPORTANT: prevent the restore to delete anything from the Primary Hub during the restore
-         veleroManagedClustersBackupName: latest
-         veleroCredentialsBackupName: latest
-         veleroResourcesBackupName: latest
+     namespace: open-custer-management-backup
+   spec:
+     cleanupBeforeRestore: None # IMPORTANT: prevent the restore to delete anything from the Primary Hub during the restore
+     veleroManagedClustersBackupName: latest
+     veleroCredentialsBackupName: latest
+     veleroResourcesBackupName: latest
    ```
 
    ***ATTENTION***: it is really important to set the `cleanupBeforeRestore` value to `None` to prevent accidental deletion of restored objects from the Primary Hub.
@@ -173,7 +173,24 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
 
    Create the same `DataProtectionApplication` Custom Resource on all the Cluster Hubs.
 9. On the Primary Hub create the `BackupSchedule` Custom Resource to start taking backups to the new location.
-10. On the Passive Hubs create the `Restore` Custom Resource to periodically restore passive data from the Primary Hub: [cluster_v1beta1_restore_passive_sync.yaml](https://github.com/stolostron/cluster-backup-operator/blob/release-2.5/config/samples/cluster_v1beta1_restore_passive_sync.yaml)
+10. On the Passive Hubs create a *one-shot* `Restore` with the `cleanupBeforeRestore` set to `CleanupAll` to prepare the former standalone Hub to receive restores from the Primary Hub without any left-over:
+
+      ```yaml
+      apiVersion: cluster.open-cluster-management.io/v1beta1
+      kind: Restore
+      metadata:
+        name: restore-with-cleanupall
+        namespace: open-custer-management-backup
+      spec:
+        cleanupBeforeRestore: CleanupAll # This will cleanup ALL the resources from the Passive hub
+        veleroManagedClustersBackupName: latest
+        veleroCredentialsBackupName: latest
+        veleroResourcesBackupName: latest
+      ```
+
+      Only the resources that would be backed up will be deleted by this `Restore`, **the task will honor backup exclusion label**.
+
+11. On the Passive Hubs create the `Restore` Custom Resource to periodically restore passive data from the Primary Hub: [cluster_v1beta1_restore_passive_sync.yaml](https://github.com/stolostron/cluster-backup-operator/blob/release-2.5/config/samples/cluster_v1beta1_restore_passive_sync.yaml)
 
 ## Common pitfalls
 
