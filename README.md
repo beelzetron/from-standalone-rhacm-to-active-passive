@@ -12,7 +12,9 @@ All the policies were synchronized on all the Cluster Hubs via GitOps, while thi
 
 Another problem was the **loss of cluster creation data in case of Cluster Hub failure**: our Customer leveraged RHACM to create OpenShift clusters on VMware infrastructure running on their 3 data-centers, this data would not be automatically imported into another Cluster Hub.
 
-Given all of that, Customer was really keen to adopt the new Business Continuity model offered by RHACM 2.5 Backup and Restore feature. We'll not discuss the setup of the feature here - you can find a great explanation [here](https://cloud.redhat.com/blog/backup-and-restore-hub-clusters-with-red-hat-advanced-cluster-management-for-kubernetes) - we'll focus instead on the procedure adopted to move from 3 standalone RHACM Cluster Hubs to one Active Cluster Hub and two Passive Cluster Hubs with no data loss.
+Given all of that, Customer was really keen to adopt the new Business Continuity model offered by RHACM 2.5 Backup and Restore feature. We'll not discuss the setup of the feature here - you can find a great explanation [here](https://cloud.redhat.com/blog/backup-and-restore-hub-clusters-with-red-hat-advanced-cluster-management-for-kubernetes) - we'll focus instead on the procedure adopted to move from 3 standalone RHACM Cluster Hubs to one Active Cluster Hub and two Passive Cluster Hubs.
+
+![Active-Passive Infrastructure](images/rhacm-consolidation-active-passive-hubs.png)
 
 ## Moving Standalone Cluster Hubs to Active/Passive Procedure
 
@@ -185,6 +187,4 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
 
 ## Conclusions
 
-The resulting scenario for our Customer was a Primary Hub and two Passive Hubs ready to take over the Primary role in case of failure.
-
-![Active-Passive Infrastructure](images/rhacm-consolidation-active-passive-hubs.png)
+Applying the procedure described earlier allowed the Customer to move to the new Business Continuity feature offered by Red Hat Advanced Cluster Management 2.5.
