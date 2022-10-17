@@ -4,7 +4,7 @@ Recently one of our Customers asked how to move from a standalone RHACM setup to
 
 ## Customer scenario
 
-The Customer had a **3 data-centers setup**, each one with its own RHACM Cluster Hub responsible of managing the local OCP clusters. They planned their setup with disaster recovery in mind so there were no object name collisions. The initial DR plan was to manually import OpenShift clusters of the failed Cluster Hub into one of the other two.
+The Customer had a **3 data-centers setup**, each one with its own RHACM Cluster Hub responsible of managing the local OCP clusters. They planned their setup with disaster recovery in mind so **there were no object name collisions**. The initial DR plan was to manually import OpenShift clusters of the failed Cluster Hub into one of the other two.
 
 ![Standalone RHACM Hubs](images/rhacm-consolidation-standalone-hubs.png)
 
