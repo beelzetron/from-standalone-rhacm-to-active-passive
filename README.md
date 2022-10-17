@@ -119,7 +119,7 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
    kind: Restore
    metadata:
      name: import-hub2-clusters
-     namespace: open-custer-management-backup
+     namespace: open-cluster-management-backup
    spec:
      cleanupBeforeRestore: None # IMPORTANT: prevent the restore to delete anything from the Primary Hub during the restore
      veleroManagedClustersBackupName: latest
@@ -180,10 +180,10 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
       kind: Restore
       metadata:
         name: restore-with-cleanupall
-        namespace: open-custer-management-backup
+        namespace: open-cluster-management-backup
       spec:
         cleanupBeforeRestore: CleanupAll # This will cleanup ALL the resources from the Passive hub
-        veleroManagedClustersBackupName: latest
+        veleroManagedClustersBackupName: skip
         veleroCredentialsBackupName: latest
         veleroResourcesBackupName: latest
       ```
