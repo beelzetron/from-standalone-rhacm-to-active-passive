@@ -103,7 +103,7 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
 
 4. Verify that the velero pod is running and check if the `BackupStorageLocation` is available:
 
-   ```bash
+   ```
    oc -n open-cluster-management-backup get backupstoragelocation
    NAME        PHASE       LAST VALIDATED   AGE   DEFAULT
    dpa-hub1-1   Available   58s              2d    true
@@ -130,6 +130,13 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
    ***ATTENTION***: it is really important to set the `cleanupBeforeRestore` value to `None` to prevent accidental deletion of restored objects from the Primary Hub.
 
    When the `Restore` terminates you should see the managed clusters added to you Primary Hub.
+
+   This `Restore` can be safely deleted once completed with the command
+
+   ```
+   oc -n open-cluster-management-backup delete restore import-hub2-clusters
+   ```
+
 7. Repeat the steps **from 3 to 6** to move other Cluster Hubs to a Passive role.
 8. When you are done moving the managed clusters from the Passive Hubs to the Primary Hub, you can complete the configuration of the Active/Passive feature.
 
@@ -189,6 +196,12 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
       ```
 
       Only the resources that would be backed up will be deleted by this `Restore`, **the task will honor backup exclusion label**.
+
+    This `Restore`, once completed, can be safely deleted with the command
+
+      ```
+      oc -n open-cluster-management-backup delete restore restore-with-cleanup
+      ```
 
 11. On the Passive Hubs create the `Restore` Custom Resource to periodically restore passive data from the Primary Hub: [cluster_v1beta1_restore_passive_sync.yaml](https://github.com/stolostron/cluster-backup-operator/blob/release-2.5/config/samples/cluster_v1beta1_restore_passive_sync.yaml)
 
