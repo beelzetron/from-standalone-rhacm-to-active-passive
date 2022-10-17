@@ -1,5 +1,7 @@
 # How to move from standalone RHACM to Active/Passive Setup
 
+by Lorenzo Dalrio and Giulia Bacchini
+
 Recently one of our Customers asked how to move from a standalone RHACM setup to an Active/Passive Hub one given that the [Hub Backup and Restore feature went GA on Red Hat Advanced Cluster Management 2.5](https://www.redhat.com/en/blog/red-hat-brings-greater-simplicity-and-flexibility-kubernetes-management-latest-version-red-hat-advanced-cluster-management-kubernetes).
 
 ## Customer scenario
