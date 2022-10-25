@@ -10,7 +10,7 @@ The Customer had a **3 data-centers setup**, each one with its own RHACM Cluster
 
 ![Standalone RHACM Hubs](images/rhacm-consolidation-standalone-hubs.png)
 
-All the policies were synchronized on all the Cluster Hubs via GitOps, while this approach permitted a sort of hot standby capability - importing clusters would've been enough to start applying policies on them - it caused a **lot of policies with unknown state** since the clusters where they were supposed to be applied weren't present.
+All the policies were synchronized on all the Cluster Hubs via GitOps, while this approach permitted sort of hot standby capability - importing clusters would've been enough to start applying policies on them - it caused a **lot of policies with unknown state** since the clusters where they were supposed to be applied weren't present.
 
 Another problem was the **loss of cluster creation data in case of Cluster Hub failure**: our Customer leveraged RHACM to create OpenShift clusters on VMware infrastructure running on their 3 data-centers, this data would not be automatically imported into another Cluster Hub.
 
