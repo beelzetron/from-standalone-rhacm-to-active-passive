@@ -26,7 +26,7 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
 
    Hub1 example `DataProtectionApplication`:
 
-   ```yaml
+   ```
    apiVersion: oadp.openshift.io/v1alpha1
    kind: DataProtectionApplication
    metadata:
@@ -67,7 +67,7 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
 
    Hub1 example `DataProtectionApplication` *pointing to Hub2 prefix*:
 
-   ```yaml
+   ```
    apiVersion: oadp.openshift.io/v1alpha1
    kind: DataProtectionApplication
    metadata:
@@ -116,7 +116,7 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
 5. Detach all the managed clusters from the Cluster Hub that you are making Passive, ***wait for the process to complete***.
 6. On the Primary Hub, create a one-shot `Restore` Custom Resource to import the managed clusters previously attached to the hub you are making Passive:
 
-   ```yaml
+   ```
    apiVersion: cluster.open-cluster-management.io/v1beta1
    kind: Restore
    metadata:
@@ -131,12 +131,16 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
 
    ***ATTENTION***: it is really important to set the `cleanupBeforeRestore` value to `None` to prevent accidental deletion of restored objects from the Primary Hub.
 
-   When the `Restore` terminates you should see the managed clusters added to you Primary Hub.
+   Check the `Restore` status by running
+
+   ```
+   oc -n open-cluster-management-backup describe restore import-hub2-clusters
+   ```
 
    This `Restore` can be safely deleted once completed with the command
 
    ```
-   oc -n open-cluster-management-backup delete restore import-hub2-clusters
+   oc -n open-cluster-management-backup delete restore import-hub2-clusters 
    ```
 
 7. Repeat the steps **from 3 to 6** to move other Cluster Hubs to a Passive role.
@@ -144,7 +148,7 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
 
    Set a prefix on your `DataProtectionApplication` Custom Resource that will be used for both Active and Passive Hubs:
 
-   ```yaml
+   ```
    apiVersion: oadp.openshift.io/v1alpha1
    kind: DataProtectionApplication
    metadata:
@@ -184,7 +188,7 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
 9. On the Primary Hub create the `BackupSchedule` Custom Resource to start taking backups to the new location.
 10. On the Passive Hubs create a *one-shot* `Restore` with the `cleanupBeforeRestore` set to `CleanupAll` to prepare the former standalone Hub to receive restores from the Primary Hub without any left-over:
 
-      ```yaml
+      ```
       apiVersion: cluster.open-cluster-management.io/v1beta1
       kind: Restore
       metadata:
@@ -213,7 +217,7 @@ RHACM Backup and Restore feature was leveraged by [Red Hat Consulting](https://w
 
 - Policies applied to the Cluster Hub itself are backed up automatically, if those are different across your Cluster Hubs, exclude them using the label
 
-  ```yaml
+  ```
   velero.io/exclude-from-backup: "true"
   ```
 
